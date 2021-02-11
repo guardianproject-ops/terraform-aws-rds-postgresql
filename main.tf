@@ -86,7 +86,7 @@ resource "aws_ssm_parameter" "db_admin_username" {
   count = local.region_settings_param_count
   name  = "${local.region_settings_prefix}/rds/db_admin_username"
   type  = "String"
-  value = var.admin_database_username
+  value = var.database_username
   tags  = module.this.tags
 }
 
