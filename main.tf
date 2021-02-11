@@ -8,7 +8,7 @@ locals {
 module "kms_key_rds" {
   source = "git::https://github.com/cloudposse/terraform-aws-kms-key.git?ref=tags/0.9.0"
 
-  count                   = use_external_kms_key ? 0 : 1
+  count                   = local.use_external_kms_key ? 0 : 1
   context                 = module.this.context
   description             = "KMS key for rds"
   deletion_window_in_days = 10
@@ -49,7 +49,7 @@ module "db" {
   instance_class          = var.instance_class
   allocated_storage       = var.allocated_storage
   storage_encrypted       = true
-  kms_key_id              = use_external_kms_key ? var.kms_key_id : module.kms_key_rds[0].key_arn
+  kms_key_id              = local.use_external_kms_key ? var.kms_key_id : module.kms_key_rds[0].key_arn
   name                    = var.database_name
   username                = var.database_username
   password                = var.database_password
