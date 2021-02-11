@@ -88,7 +88,7 @@ variable "region_settings_params_enabled" {
 }
 
 variable "kms_key_id" {
-  default     = null
+  default     = ""
   type        = string
   description = "An optional KMS key to use to encrypt the database, if not provided, one will be generated."
 }

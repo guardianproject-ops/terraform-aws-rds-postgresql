@@ -1,5 +1,5 @@
 locals {
-  use_external_kms_key = var.kms_key_id ? true : false
+  use_external_kms_key = length(var.kms_key_id) > 0 ? true : false
 }
 
 # Create a RDS security group in the VPC which our database will belong to.
