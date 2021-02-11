@@ -86,3 +86,9 @@ variable "region_settings_params_enabled" {
   default     = true
   description = "When enabled the connection information (except password) is stored in SSM Param Store region settings for this deployment"
 }
+
+variable "kms_key_id" {
+  default     = null
+  type        = string
+  description = "An optional KMS key to use to encrypt the database, if not provided, one will be generated."
+}
