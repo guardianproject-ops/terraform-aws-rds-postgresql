@@ -94,7 +94,7 @@ resource "aws_ssm_parameter" "db_port" {
   count = local.region_settings_param_count
   name  = "${local.region_settings_prefix}/rds/db_port"
   type  = "String"
-  value = module.rds.this_db_instance_port
+  value = module.db.this_db_instance_port
   tags  = module.this.tags
 }
 
@@ -102,7 +102,7 @@ resource "aws_ssm_parameter" "db_endpoint" {
   count = local.region_settings_param_count
   name  = "${local.region_settings_prefix}/rds/db_endpoint"
   type  = "String"
-  value = module.rds.this_db_instance_endpoint
+  value = module.db.this_db_instance_endpoint
   tags  = module.this.tags
 }
 
@@ -110,7 +110,7 @@ resource "aws_ssm_parameter" "db_arn" {
   count = local.region_settings_param_count
   name  = "${local.region_settings_prefix}/rds/db_arn"
   type  = "String"
-  value = module.rds.this_db_instance_arn
+  value = module.db.this_db_instance_arn
   tags  = module.this.tags
 }
 
@@ -118,6 +118,6 @@ resource "aws_ssm_parameter" "db_address" {
   count = local.region_settings_param_count
   name  = "${local.region_settings_prefix}/rds/db_address"
   type  = "String"
-  value = module.rds.this_db_instance_address
+  value = module.db.this_db_instance_address
   tags  = module.this.tags
 }
