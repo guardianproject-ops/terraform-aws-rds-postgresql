@@ -141,6 +141,7 @@ module "rds" {
 | id\_length\_limit | Limit `id` to this many characters (minimum 6).<br>Set to `0` for unlimited length.<br>Set to `null` for default, which is `0`.<br>Does not affect `id_full`. | `number` | n/a | yes |
 | instance\_class | n/a | `string` | n/a | yes |
 | kms\_key\_id | An optional KMS key to use to encrypt the database, if not provided, one will be generated. | `string` | `""` | no |
+| kms\_key\_policy | A valid policy JSON document to be appplied to the kms key created by this module. Not necessary if supplying your own kms key. | `string` | `""` | no |
 | label\_key\_case | The letter case of label keys (`tag` names) (i.e. `name`, `namespace`, `environment`, `stage`, `attributes`) to use in `tags`.<br>Possible values: `lower`, `title`, `upper`.<br>Default value: `title`. | `string` | n/a | yes |
 | label\_order | The naming order of the id output and Name tag.<br>Defaults to ["namespace", "environment", "stage", "name", "attributes"].<br>You can omit any of the 5 elements, but at least one must be present. | `list(string)` | n/a | yes |
 | label\_value\_case | The letter case of output label values (also used in `tags` and `id`).<br>Possible values: `lower`, `title`, `upper` and `none` (no transformation).<br>Default value: `lower`. | `string` | n/a | yes |
