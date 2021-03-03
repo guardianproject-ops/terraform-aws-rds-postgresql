@@ -14,6 +14,7 @@ module "kms_key_rds" {
   deletion_window_in_days = 10
   enable_key_rotation     = "true"
   alias                   = "alias/${module.this.id}_kms_key"
+  policy                  = var.kms_key_policy
 }
 
 resource "aws_security_group" "rds" {

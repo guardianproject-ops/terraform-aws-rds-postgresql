@@ -92,3 +92,9 @@ variable "kms_key_id" {
   type        = string
   description = "An optional KMS key to use to encrypt the database, if not provided, one will be generated."
 }
+
+variable "kms_key_policy" {
+  default     = ""
+  type        = string
+  description = "A valid policy JSON document to be appplied to the kms key created by this module. Not necessary if supplying your own kms key."
+}
