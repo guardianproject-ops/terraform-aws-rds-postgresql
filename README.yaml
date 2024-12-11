@@ -1,13 +1,13 @@
-name: terraform-aws-CHANGEME
+name: terraform-aws-rds-postgresql
 license: GPL3
-gitlab_repo: guardianproject-ops/terraform-aws-CHANGEME
+gitlab_repo: guardianproject-ops/terraform-aws-rds-postgresql
 
 description: Terraform module with opinions about deploying AWS RDS for Postgres
 
 introduction: |-
   This is an opinionated wrapper around the [`terraform-aws-modules/rds/aws`][upstream] module for easily deploying a Postgres RDS instance.
 
-  This module assumes:
+  ### This module assumes
 
     * Your application/infra will create its own user and own database inside the RDS, and not use the root user
     * You want to run the latest minor version for your chosen major version 🏁
@@ -16,12 +16,18 @@ introduction: |-
 
   🏁 : indicates there are escape hatches using extra input variables
 
-  Defaults:
+  ### Defaults
     * You specify your chosen major version, and the minor version is automatically upgraded to latest
     * The master user is `root`, and the password is in AWS Secrets Manager and rotated every 7 days
 
-  Recomendations:
+  ### Recomendations
+
     * Use RDS IAM Authentication for your users
+    * Pin your major version
+    * Set the `iops` var to an appropriate level for your workload
+    * Set appropriate maintenance windows for minor version upgrades
+    * Do not use the "root" user for your application, only admin operations
+    * Use init containers or our [ansible RDS playbook](https://gitlab.com/guardianproject-ops/ansible-collection-common/-/blob/main/playbooks/rds.yml?ref_type=heads) for initializing your user and database
 
   [upstream]: https://registry.terraform.io/modules/terraform-aws-modules/rds/aws/latest
 

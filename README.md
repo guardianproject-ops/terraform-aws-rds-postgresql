@@ -1,6 +1,6 @@
 
 <!-- markdownlint-disable -->
-# terraform-aws-CHANGEME
+# terraform-aws-rds-postgresql
 <!-- markdownlint-restore -->
 
 <!-- [![README Header][readme_header_img]][readme_header_link] -->
@@ -51,7 +51,7 @@ It's 100% Open Source and licensed under the [GNU General Public License](LICENS
 
 This is an opinionated wrapper around the [`terraform-aws-modules/rds/aws`][upstream] module for easily deploying a Postgres RDS instance.
 
-This module assumes:
+### This module assumes
 
   * Your application/infra will create its own user and own database inside the RDS, and not use the root user
   * You want to run the latest minor version for your chosen major version 🏁
@@ -60,12 +60,18 @@ This module assumes:
 
 🏁 : indicates there are escape hatches using extra input variables
 
-Defaults:
+### Defaults
   * You specify your chosen major version, and the minor version is automatically upgraded to latest
   * The master user is `root`, and the password is in AWS Secrets Manager and rotated every 7 days
 
-Recomendations:
+### Recomendations
+
   * Use RDS IAM Authentication for your users
+  * Pin your major version
+  * Set the `iops` var to an appropriate level for your workload
+  * Set appropriate maintenance windows for minor version upgrades
+  * Do not use the "root" user for your application, only admin operations
+  * Use init containers or our [ansible RDS playbook](https://gitlab.com/guardianproject-ops/ansible-collection-common/-/blob/main/playbooks/rds.yml?ref_type=heads) for initializing your user and database
 
 [upstream]: https://registry.terraform.io/modules/terraform-aws-modules/rds/aws/latest
 
@@ -229,7 +235,7 @@ module "db" {
 
 **Got a question?** We got answers.
 
-File a GitLab [issue](https://gitlab.com/guardianproject-ops/terraform-aws-CHANGEME/-/issues), send us an [email][email] or join our [Matrix Community][matrix].
+File a GitLab [issue](https://gitlab.com/guardianproject-ops/terraform-aws-rds-postgresql/-/issues), send us an [email][email] or join our [Matrix Community][matrix].
 
 ## Matrix Community
 
@@ -243,7 +249,7 @@ together as a community to build on our open source code.
 
 ### Bug Reports & Feature Requests
 
-Please use the [issue tracker](https://gitlab.com/guardianproject-ops/terraform-aws-CHANGEME/-/issues) to report any bugs or file feature requests.
+Please use the [issue tracker](https://gitlab.com/guardianproject-ops/terraform-aws-rds-postgresql/-/issues) to report any bugs or file feature requests.
 
 ### Developing
 
@@ -338,14 +344,14 @@ us][website] to get support with using our projects.
 
 
 <!-- markdownlint-disable -->
-  [website]: https://guardianproject.info/?utm_source=gitlab&utm_medium=readme&utm_campaign=guardianproject-ops/terraform-aws-CHANGEME&utm_content=website
+  [website]: https://guardianproject.info/?utm_source=gitlab&utm_medium=readme&utm_campaign=guardianproject-ops/terraform-aws-rds-postgresql&utm_content=website
   [gitlab]: https://www.gitlab.com/guardianproject-ops
   [contact]: https://guardianproject.info/contact/
   [matrix]: https://matrix.to/#/%23guardianproject:matrix.org
   [readme_header_img]: https://gitlab.com/guardianproject/guardianprojectpublic/-/raw/master/Graphics/GuardianProject/pngs/logo-color-w256.png
-  [readme_header_link]: https://guardianproject.info?utm_source=gitlab&utm_medium=readme&utm_campaign=guardianproject-ops/terraform-aws-CHANGEME&utm_content=readme_header_link
+  [readme_header_link]: https://guardianproject.info?utm_source=gitlab&utm_medium=readme&utm_campaign=guardianproject-ops/terraform-aws-rds-postgresql&utm_content=readme_header_link
   [readme_commercial_support_img]: https://www.sr2.uk/readme/paid-support.png
-  [readme_commercial_support_link]: https://www.sr2.uk/?utm_source=gitlab&utm_medium=readme&utm_campaign=guardianproject-ops/terraform-aws-CHANGEME&utm_content=readme_commercial_support_link
+  [readme_commercial_support_link]: https://www.sr2.uk/?utm_source=gitlab&utm_medium=readme&utm_campaign=guardianproject-ops/terraform-aws-rds-postgresql&utm_content=readme_commercial_support_link
   [partner]: https://guardianproject.info/how-you-can-work-with-us/
   [nonops]: https://gitlab.com/guardianproject
   [mastodon]: https://social.librem.one/@guardianproject
