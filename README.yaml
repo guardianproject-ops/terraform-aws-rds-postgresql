@@ -1,70 +1,31 @@
----
-#
-# This is the canonical configuration for the `README.md`
-# Run `make readme` to rebuild the `README.md`
-#
+name: terraform-aws-CHANGEME
+license: GPL3
+gitlab_repo: guardianproject-ops/terraform-aws-CHANGEME
 
-# Name of this project
-name: terraform-aws-rds-postgresql
+description: Terraform module for ...
 
-# License of this project
-license: "APGL3"
+introduction: |-
+  Use this module to ..
 
-# Canonical GitLab repo
-gitlab_repo: guardianproject-ops/terraform-aws-rds-postgresql
-
-# Badges to display
-badges: []
-
-# Short description of this project
-description: |-
-
-  This is a terraform module that creates a Postgresql RDS instance.
-
-# How to use this project
 usage: |-
 
-  ```hcl
-  module "rds" {
-    source = "git::https://gitlab.com/guardianproject-ops/terraform-aws-rds-postgresql?ref=master"
-
-    engine               = "postgres"
-    instance_class       = var.instance_class
-    engine_version       = "12.4"
-    major_engine_version = "12.4"
-    family               = "postgres12"
-    allocated_storage    = var.allocated_storage
-
-    # rds meta
-    deletion_protection_enabled = var.is_prod_like
-    apply_immediately           = var.is_prod_like
-    skip_final_snapshot         = true
-    allow_major_version_upgrade = false
-    backup_retention_period     = var.backup_retention_period
-
-    # network
-    vpc_id         = var.vpc_id
-    vpc_cidr_block = var.vpc_cidr_block
-    subnet_ids     = var.subnet_ids
-
-    database_name     = var.admin_database_name
-    database_username = var.admin_database_username
-    database_password = var.admin_database_password
-
-    context = module.this.context
+  ```terraform
+  module "module" {
+    source = "git::https://gitlab.com/guardianproject-ops/terraform-aws-CHANGEME?ref=main"
+    greeting = "Bonjour"
   }
-
   ```
 
-related: []
+  ## Documentation
+  
+  Docs are nice!
+
 
 include:
-  - "docs/terraform.md"
+  - docs/terraform.md
 
-funded_by_cdr: true
-
-# Contributors to this project
 contributors:
   - name: "Abel Luck"
     gitlab: "abelxluck"
     gravatar: 0f605397e0ead93a68e1be26dc26481a
+
