@@ -2,24 +2,52 @@ name: terraform-aws-CHANGEME
 license: GPL3
 gitlab_repo: guardianproject-ops/terraform-aws-CHANGEME
 
-description: Terraform module for ...
+description: Terraform module with opinions about deploying AWS RDS for Postgres
 
 introduction: |-
-  Use this module to ..
+  This is an opinionated wrapper around the [`terraform-aws-modules/rds/aws`][upstream] module for easily deploying a Postgres RDS instance.
+
+  This module assumes:
+
+    * Your application/infra will create its own user and own database inside the RDS, and not use the root user
+    * You want to run the latest minor version for your chosen major version 🏁
+    * You want to create a root user whose password is controlled by secrets manager (perhaps automatically rotated) 🏁
+    * You want cloudwatch alarms piping alerts into SNS 🏁
+
+  🏁 : indicates there are escape hatches using extra input variables
+
+  Defaults:
+    * You specify your chosen major version, and the minor version is automatically upgraded to latest
+    * The master user is `root`, and the password is in AWS Secrets Manager and rotated every 7 days
+
+  Recomendations:
+    * Use RDS IAM Authentication for your users
+
+  [upstream]: https://registry.terraform.io/modules/terraform-aws-modules/rds/aws/latest
 
 usage: |-
 
+  See [`examples/simple`](./examples/simple).
+
   ```terraform
-  module "module" {
-    source = "git::https://gitlab.com/guardianproject-ops/terraform-aws-CHANGEME?ref=main"
-    greeting = "Bonjour"
+  module "db" {
+    source                              = "guardianproject-ops/rds-postgresql/aws"
+    context                             = module.label_db.context
+    allocated_storage                   = 20
+    allow_access_cidr_blocks            = [var.cidr_allowed_to_talk_to_my_rds]
+    apply_immediately                   = true
+    deletion_protection_enabled         = false
+    postgres_major_version              = "17"
+    instance_class                      = "db.t3.medium"
+    alarms_sns_topics                   = [var.my_alarm_topic]
+    subnet_ids                          = var.subnet_ids
+    vpc_id                              = var.vpc_id
   }
   ```
 
-  ## Documentation
-  
-  Docs are nice!
+  ## Notes
 
+  1. For an RDS instance with `storage_type` using `gp3`, be aware that `iops` and `storage_throughput` cannot be specified if the `allocated_storage` value is below a per-`engine` threshold. See the [RDS User Guide](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Storage.html#gp3-storage) for details.
 
 include:
   - docs/terraform.md
@@ -28,4 +56,3 @@ contributors:
   - name: "Abel Luck"
     gitlab: "abelxluck"
     gravatar: 0f605397e0ead93a68e1be26dc26481a
-

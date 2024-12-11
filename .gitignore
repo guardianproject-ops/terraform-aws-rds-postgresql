@@ -42,10 +42,11 @@ node_modules
 **/node_modules/*
 **/package-lock.json
 
-.build-harness
+.build-harness*
 build-harness
 
 *.zip
 
 *.iml
 .idea
+.terraform.lock.hcl
