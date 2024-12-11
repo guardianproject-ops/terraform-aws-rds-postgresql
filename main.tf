@@ -53,7 +53,7 @@ module "db" {
   kms_key_id                                             = var.kms_key_id
   maintenance_window                                     = var.maintenance_window
   major_engine_version                                   = var.major_engine_version
-  manage_master_user_password                            = var.manage_master_user_password
+  manage_master_user_password                            = true
   manage_master_user_password_rotation                   = var.manage_master_user_password_rotation
   master_user_password_rotate_immediately                = var.master_user_password_rotate_immediately
   master_user_password_rotation_automatically_after_days = var.master_user_password_rotation_automatically_after_days

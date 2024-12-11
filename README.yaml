@@ -11,7 +11,9 @@ introduction: |-
 
     * Your application/infra will create its own user and own database inside the RDS, and not use the root user
     * You want to run the latest minor version for your chosen major version 🏁
-    * You want to create a root user whose password is controlled by secrets manager (perhaps automatically rotated) 🏁
+    * You will use an admin user to create other users and databases for your application, you will not use the admin user or db directly
+    * AWS Secrets Manager will store the admin user password
+    * AWS Secrets Manager will rotate the admin user password  🏁
     * You want cloudwatch alarms piping alerts into SNS 🏁
 
   🏁 : indicates there are escape hatches using extra input variables
@@ -28,12 +30,16 @@ introduction: |-
     * Set appropriate maintenance windows for minor version upgrades
     * Do not use the "root" user for your application, only admin operations
     * Use init containers or our [ansible RDS playbook](https://gitlab.com/guardianproject-ops/ansible-collection-common/-/blob/main/playbooks/rds.yml?ref_type=heads) for initializing your user and database
+    * Set `max_allocated_storage` to get storage autoscaling
 
   [upstream]: https://registry.terraform.io/modules/terraform-aws-modules/rds/aws/latest
 
 usage: |-
 
   See [`examples/simple`](./examples/simple).
+
+  You choose your major postgres version with the `postgres_major_version` variable. If you want to pin to a specific minor version, then you also must specifiy `engine_version` and  `family`. Refer to the [Amazon RDS for PostgreSQL updates docs](https://docs.aws.amazon.com/AmazonRDS/latest/PostgreSQLReleaseNotes/postgresql-versions.html) for current values.
+
 
   ```terraform
   module "db" {

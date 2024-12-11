@@ -55,7 +55,9 @@ This is an opinionated wrapper around the [`terraform-aws-modules/rds/aws`][upst
 
   * Your application/infra will create its own user and own database inside the RDS, and not use the root user
   * You want to run the latest minor version for your chosen major version 🏁
-  * You want to create a root user whose password is controlled by secrets manager (perhaps automatically rotated) 🏁
+  * You will use an admin user to create other users and databases for your application, you will not use the admin user or db directly
+  * AWS Secrets Manager will store the admin user password
+  * AWS Secrets Manager will rotate the admin user password  🏁
   * You want cloudwatch alarms piping alerts into SNS 🏁
 
 🏁 : indicates there are escape hatches using extra input variables
@@ -72,6 +74,7 @@ This is an opinionated wrapper around the [`terraform-aws-modules/rds/aws`][upst
   * Set appropriate maintenance windows for minor version upgrades
   * Do not use the "root" user for your application, only admin operations
   * Use init containers or our [ansible RDS playbook](https://gitlab.com/guardianproject-ops/ansible-collection-common/-/blob/main/playbooks/rds.yml?ref_type=heads) for initializing your user and database
+  * Set `max_allocated_storage` to get storage autoscaling
 
 [upstream]: https://registry.terraform.io/modules/terraform-aws-modules/rds/aws/latest
 
@@ -93,6 +96,9 @@ The table below correctly indicates which inputs are required.
 
 
 See [`examples/simple`](./examples/simple).
+
+You choose your major postgres version with the `postgres_major_version` variable. If you want to pin to a specific minor version, then you also must specifiy `engine_version` and  `family`. Refer to the [Amazon RDS for PostgreSQL updates docs](https://docs.aws.amazon.com/AmazonRDS/latest/PostgreSQLReleaseNotes/postgresql-versions.html) for current values.
+
 
 ```terraform
 module "db" {
@@ -213,14 +219,15 @@ module "db" {
 | Name | Description |
 |------|-------------|
 | <a name="output_address"></a> [address](#output\_address) | The address of the RDS instance |
+| <a name="output_admin_username"></a> [admin\_username](#output\_admin\_username) | The master username for the database |
 | <a name="output_arn"></a> [arn](#output\_arn) | The ARN of the RDS instance |
 | <a name="output_availability_zone"></a> [availability\_zone](#output\_availability\_zone) | The availability zone of the RDS instance |
 | <a name="output_ca_cert_identifier"></a> [ca\_cert\_identifier](#output\_ca\_cert\_identifier) | Specifies the identifier of the CA certificate for the DB instance |
 | <a name="output_db_iam_dbuser_arn_prefix"></a> [db\_iam\_dbuser\_arn\_prefix](#output\_db\_iam\_dbuser\_arn\_prefix) | The resource ARN prefix for a db user to connect with IAM database authentication. You should append `/your-iam-db-user` to this value.<br/>As per: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.IAMDBAuth.IAMPolicy.html |
 | <a name="output_endpoint"></a> [endpoint](#output\_endpoint) | The connection endpoint |
 | <a name="output_identifier"></a> [identifier](#output\_identifier) | The RDS instance identifier |
-| <a name="output_master_user_secret_arn"></a> [master\_user\_secret\_arn](#output\_master\_user\_secret\_arn) | The ARN of the master user secret (Only available when manage\_master\_user\_password is set to true) |
-| <a name="output_master_user_secret_name"></a> [master\_user\_secret\_name](#output\_master\_user\_secret\_name) | The name of the master user secret (Only available when manage\_master\_user\_password is set to true) |
+| <a name="output_master_user_secret_arn"></a> [master\_user\_secret\_arn](#output\_master\_user\_secret\_arn) | The ARN of the master user secret |
+| <a name="output_master_user_secret_name"></a> [master\_user\_secret\_name](#output\_master\_user\_secret\_name) | The name of the master user secret |
 | <a name="output_name"></a> [name](#output\_name) | The database name |
 | <a name="output_port"></a> [port](#output\_port) | The database port |
 | <a name="output_resource_id"></a> [resource\_id](#output\_resource\_id) | The RDS Resource ID of this instance |

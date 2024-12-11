@@ -92,14 +92,15 @@
 | Name | Description |
 |------|-------------|
 | <a name="output_address"></a> [address](#output\_address) | The address of the RDS instance |
+| <a name="output_admin_username"></a> [admin\_username](#output\_admin\_username) | The master username for the database |
 | <a name="output_arn"></a> [arn](#output\_arn) | The ARN of the RDS instance |
 | <a name="output_availability_zone"></a> [availability\_zone](#output\_availability\_zone) | The availability zone of the RDS instance |
 | <a name="output_ca_cert_identifier"></a> [ca\_cert\_identifier](#output\_ca\_cert\_identifier) | Specifies the identifier of the CA certificate for the DB instance |
 | <a name="output_db_iam_dbuser_arn_prefix"></a> [db\_iam\_dbuser\_arn\_prefix](#output\_db\_iam\_dbuser\_arn\_prefix) | The resource ARN prefix for a db user to connect with IAM database authentication. You should append `/your-iam-db-user` to this value.<br/>As per: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.IAMDBAuth.IAMPolicy.html |
 | <a name="output_endpoint"></a> [endpoint](#output\_endpoint) | The connection endpoint |
 | <a name="output_identifier"></a> [identifier](#output\_identifier) | The RDS instance identifier |
-| <a name="output_master_user_secret_arn"></a> [master\_user\_secret\_arn](#output\_master\_user\_secret\_arn) | The ARN of the master user secret (Only available when manage\_master\_user\_password is set to true) |
-| <a name="output_master_user_secret_name"></a> [master\_user\_secret\_name](#output\_master\_user\_secret\_name) | The name of the master user secret (Only available when manage\_master\_user\_password is set to true) |
+| <a name="output_master_user_secret_arn"></a> [master\_user\_secret\_arn](#output\_master\_user\_secret\_arn) | The ARN of the master user secret |
+| <a name="output_master_user_secret_name"></a> [master\_user\_secret\_name](#output\_master\_user\_secret\_name) | The name of the master user secret |
 | <a name="output_name"></a> [name](#output\_name) | The database name |
 | <a name="output_port"></a> [port](#output\_port) | The database port |
 | <a name="output_resource_id"></a> [resource\_id](#output\_resource\_id) | The RDS Resource ID of this instance |

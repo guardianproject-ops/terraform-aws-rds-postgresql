@@ -3,6 +3,12 @@ output "this" {
   value       = try(module.db[0], "")
 }
 
+output "admin_username" {
+  description = "The master username for the database"
+  value       = module.db[0].db_instance_username
+  sensitive   = true
+}
+
 output "address" {
   description = "The address of the RDS instance"
   value       = try(module.db[0].db_instance_address, null)
@@ -54,12 +60,12 @@ output "name" {
 }
 
 output "master_user_secret_name" {
-  description = "The name of the master user secret (Only available when manage_master_user_password is set to true)"
+  description = "The name of the master user secret"
   value       = module.this.enabled ? data.aws_secretsmanager_secret.db[0].name : null
 }
 
 output "master_user_secret_arn" {
-  description = "The ARN of the master user secret (Only available when manage_master_user_password is set to true)"
+  description = "The ARN of the master user secret"
   value       = module.this.enabled ? module.db[0].db_instance_master_user_secret_arn : null
 }
 
